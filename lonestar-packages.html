@@ -424,15 +424,8 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  document.getElementById('navToggle').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
-  });
-
-  document.getElementById('modalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-
+<script>
+  // Global modal functions — must be global for onclick attributes to work
   function openModal(planName, price) {
     document.getElementById('planField').value = planName;
     document.getElementById('priceField').value = price;
@@ -464,6 +457,15 @@
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  // Event listeners
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
 
   document.getElementById('requestForm').addEventListener('submit', async function(e) {
     e.preventDefault();
