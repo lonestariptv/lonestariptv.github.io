@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lone Star TV — The Lone Star Standard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:      #c0392b;
+    --red-bright: #e74c3c;
+    --dark:     #0e0f13;
+    --dark-2:   #13141a;
+    --dark-3:   #1a1c22;
+    --border:   #1e1e26;
+    --text:     #f0f0f0;
+    --muted:    #888;
+    --faint:    #444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ══════════════════════════════
+     NAVIGATION
+  ══════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(10,11,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #ffffff08;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px #c0392b66);
+  }
+
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #fff;
+  }
+
+  .nav-logo-text span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--red-bright) !important; color: #fff !important; }
+
+  /* Mobile nav toggle */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ══════════════════════════════
+     VPN NOTICE BANNER
+  ══════════════════════════════ */
+  .vpn-banner {
+    position: relative;
+    z-index: 99;
+    background: #1a0a08;
+    border-bottom: 2px solid var(--red);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 64px;
+  }
+
+  .vpn-banner-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .vpn-banner-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ddd;
+    line-height: 1.6;
+  }
+
+  .vpn-banner-text strong { color: #fff; }
+
+  .vpn-banner-text .vpn-tag {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .vpn-link {
+    color: var(--red-bright);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+
+  .vpn-link:hover { color: #fff; }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 64px;
+  }
+
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .hero-star {
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+    margin-bottom: 28px;
+    animation: heroPulse 3.5s ease-in-out infinite;
+  }
+
+  @keyframes heroPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 12px #c0392b99) drop-shadow(0 0 35px #c0392b44) saturate(1.1);
+    }
+    50% {
+      filter: drop-shadow(0 0 24px #e74c3ccc) drop-shadow(0 0 60px #c0392b66) saturate(1.2);
+    }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 96px);
+    letter-spacing: 10px;
+    line-height: 0.95;
+    background: linear-gradient(180deg, #fff 0%, #ccc 50%, #999 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .hero-title-red {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: 16px;
+    color: var(--red);
+    margin-bottom: 24px;
+    padding-right: 16px;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    width: min(400px, 90vw);
+  }
+
+  .hero-divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c0392b66, transparent);
+  }
+
+  .hero-divider-icon { color: var(--red); font-size: 10px; }
+
+  .hero-taglines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 40px;
+  }
+
+  .hero-tag-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    letter-spacing: 5px;
+    color: #fff;
+  }
+
+  .hero-tag-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--red-bright); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 13px 36px;
+    border-radius: 4px;
+    border: 1px solid #ffffff22;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .btn-secondary:hover { border-color: var(--red); transform: translateY(-2px); }
+
+  /* ══════════════════════════════
+     STATS BAR
+  ══════════════════════════════ */
+  .stats-bar {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    justify-content: center;
+    gap: clamp(30px, 6vw, 80px);
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ══════════════════════════════
+     ABOUT SECTION
+  ══════════════════════════════ */
+  .about {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-text .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .about-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: 3px;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 14px;
+  }
+
+  .about-text p strong { color: #fff; font-weight: 600; }
+
+  .about-text .sign-off {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-top: 24px;
+  }
+
+  /* Right side — feature cards */
+  .about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .feature-card {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .feature-card:hover { border-color: #c0392b44; }
+
+  .feature-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════
+     TAGLINE BAND
+  ══════════════════════════════ */
+  .tagline-band {
+    background: var(--red);
+    padding: 22px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .tagline-band-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(18px, 3vw, 28px);
+    letter-spacing: 8px;
+    color: #fff;
+  }
+
+  .tagline-band-text span {
+    opacity: 0.6;
+    margin: 0 20px;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  /* ══════════════════════════════
+     WHY SECTION
+  ══════════════════════════════ */
+  .why {
+    padding: 90px 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 4px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .section-divider {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    margin: 10px auto 50px;
+    border-radius: 2px;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .why-card {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .why-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--red-bright));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .why-card:hover { transform: translateY(-4px); border-color: #c0392b44; }
+  .why-card:hover::before { opacity: 1; }
+
+  .why-icon {
+    font-size: 30px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .why-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .why-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ══════════════════════════════
+     CTA SECTION
+  ══════════════════════════════ */
+  .cta-section {
+    position: relative;
+    overflow: hidden;
+    padding: 90px 32px;
+    text-align: center;
+    background: var(--dark-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, #c0392b0d 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { margin-bottom: 14px; }
+
+  .cta-sub {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    background: #0a0b0e;
+    border-top: 1px solid var(--border);
+    padding: 40px 32px 30px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px #c0392b55);
+  }
+
+  .footer-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 5px;
+    color: #fff;
+  }
+
+  .footer-logo-text span { color: var(--red); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: #2a2a2a;
+    letter-spacing: 1px;
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(10,11,14,0.98);
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      gap: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+
+    .about {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 60px 24px;
+    }
+
+    .stats-bar { gap: 28px; padding: 24px 20px; }
+    .why { padding: 60px 20px; }
+    .cta-section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ══ -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="nav-logo-text">LONE <span>STAR</span> TV</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+    <li><a href="lonestar-packages.html" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ VPN NOTICE BANNER ══ -->
+<div class="vpn-banner">
+  <div class="vpn-banner-icon">🔒</div>
+  <div class="vpn-banner-text">
+    <span class="vpn-tag">Required</span>
+    <strong>A VPN with a Static IP is required to use Lone Star TV.</strong>
+    &nbsp;Enable your VPN's static IP feature before setup. We recommend <a class="vpn-link" href="https://protonvpn.com" target="_blank">Proton VPN</a> (free) or <a class="vpn-link" href="https://surfshark.com" target="_blank">Surfshark VPN</a> — our personal pick, unlimited devices + static IP support.
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <img class="hero-star" src="star.png" alt="Lone Star TV"/>
+    <div class="hero-eyebrow">Premium IPTV · Texas Based</div>
+    <div class="hero-title">LONE STAR</div>
+    <div class="hero-title-red">T &nbsp; V</div>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-icon">★</div>
+      <div class="hero-divider-line"></div>
+    </div>
+    <div class="hero-taglines">
+      <div class="hero-tag-main">Built Texas Strong. Priced Right.</div>
+      <div class="hero-tag-sub">More Channels · More Movies · More Texas</div>
+    </div>
+    <div class="hero-buttons">
+      <a href="#" class="btn-primary">View Packages</a>
+      <a href="#" class="btn-secondary">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS BAR ══ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-number">10,000+</div>
+    <div class="stat-label">Live Channels</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">40,000+</div>
+    <div class="stat-label">Movies & Shows</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">4K</div>
+    <div class="stat-label">HD Quality</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">99%</div>
+    <div class="stat-label">Uptime</div>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section class="about">
+  <div class="about-text">
+    <div class="eyebrow">Our Story</div>
+    <h2>WHO WE ARE</h2>
+    <p>Lone Star TV was born out of frustration. <strong>Overpriced cable bills, juggling five different streaming subscriptions</strong> just to watch what you actually want — sound familiar? We built Lone Star TV to change that.</p>
+    <p>Based right here in <strong>Texas</strong>, we deliver a massive catalog of live channels, movies, and on-demand content at prices that actually make sense.</p>
+    <p>We serve everyone — families, sports fans, cord-cutters, and everyone in between. No contracts, no runaround, no robots. When you reach out, you get a real response from a real person who actually cares whether your service works.</p>
+    <div class="sign-off">That's The Lone Star Standard.</div>
+  </div>
+  <div class="about-features">
+    <div class="feature-card">
+      <div class="feature-icon">📡</div>
+      <div>
+        <div class="feature-title">Massive Channel Catalog</div>
+        <div class="feature-desc">Over 10,000 live channels including sports, news, entertainment and more.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎬</div>
+      <div>
+        <div class="feature-title">Movies & VOD</div>
+        <div class="feature-desc">Thousands of movies and on-demand titles always available at your fingertips.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <div>
+        <div class="feature-title">Texas Prices</div>
+        <div class="feature-desc">Premium entertainment without the premium price tag. No hidden fees, ever.</div>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <div>
+        <div class="feature-title">Real Human Support</div>
+        <div class="feature-desc">You'll always reach a real person — not a bot, not a ticket system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAGLINE BAND ══ -->
+<div class="tagline-band">
+  <div class="tagline-band-text">
+    Built Texas Strong. Priced Right.
+    <span>★</span>
+    The Lone Star Standard
+    <span>★</span>
+    More Channels. More Movies. More Texas.
+  </div>
+</div>
+
+<!-- ══ WHY LONE STAR ══ -->
+<section class="why">
+  <div class="section-eyebrow">Why Choose Us</div>
+  <div class="section-title">The Lone Star Difference</div>
+  <div class="section-divider"></div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">🌟</span>
+      <div class="why-title">Elite Quality</div>
+      <div class="why-desc">Crystal clear HD and 4K streaming. No buffering, no excuses.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📱</span>
+      <div class="why-title">Any Device</div>
+      <div class="why-desc">Works on phones, tablets, smart TVs, Firestick, and more. Up to 4 devices.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">⚡</span>
+      <div class="why-title">Instant Setup</div>
+      <div class="why-desc">Up and running in minutes. Full step-by-step install guide included.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🏆</span>
+      <div class="why-title">No Contracts</div>
+      <div class="why-desc">Pay monthly, 6 months, or yearly. No lock-ins, no fine print.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTENT TYPES ══ -->
+<section style="background:var(--dark); padding:70px 32px; text-align:center; border-top:1px solid var(--border);">
+  <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:600; letter-spacing:6px; color:var(--red); text-transform:uppercase; margin-bottom:10px;">Everything You Need</div>
+  <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,5vw,54px); letter-spacing:4px; color:#fff; margin-bottom:8px;">What's Included</div>
+  <div style="width:50px; height:3px; background:linear-gradient(90deg,#c0392b,#e74c3c); margin:0 auto 16px; border-radius:2px;"></div>
+  <div style="color:var(--muted); font-size:15px; max-width:520px; margin:0 auto 48px; line-height:1.7;">One subscription. Every type of content you could want — all in one place.</div>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; max-width:960px; margin:0 auto;">
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">📺</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">Live TV</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">10,000+ live channels streaming in real time — news, entertainment, local, and more.</div>
+    </div>
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">🎬</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">Movies</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Thousands of movies on demand — new releases, classics, and everything in between.</div>
+    </div>
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">🎭</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">Series</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Full seasons of your favorite shows — binge-ready and always available.</div>
+    </div>
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">🎥</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">VOD</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Video on demand — watch what you want, when you want it, no schedule required.</div>
+    </div>
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">🌍</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">International</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Channels from around the world — Spanish, Arabic, French, and dozens more languages.</div>
+    </div>
+
+    <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:12px; padding:28px 20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='#c0392b44'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="font-size:32px; margin-bottom:12px;">🏈</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">Sports</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Live sports coverage — NFL, NBA, MLB, soccer, PPV events, and more. Never miss a game.</div>
+    </div>
+
+    <div style="background:#0f0a0a; border:1px solid #c0392b33; border-radius:12px; padding:28px 20px; grid-column: span 1;">
+      <div style="font-size:32px; margin-bottom:12px;">🔞</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">Adult Channels</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.6;">Available upon request only. Select this option on your service request form during signup.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ENDLESS ENTERTAINMENT (TMDB) ══ -->
+<section id="endless-entertainment" style="background:var(--dark-2); padding:70px 0; border-top:1px solid var(--border);">
+  <div style="text-align:center; padding:0 32px; margin-bottom:40px;">
+    <div style="font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:600; letter-spacing:6px; color:var(--red); text-transform:uppercase; margin-bottom:10px;">Now Streaming</div>
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,5vw,54px); letter-spacing:4px; color:#fff; margin-bottom:8px;">Endless Entertainment</div>
+    <div style="width:50px; height:3px; background:linear-gradient(90deg,#c0392b,#e74c3c); margin:0 auto 16px; border-radius:2px;"></div>
+    <div style="color:var(--muted); font-size:15px; max-width:520px; margin:0 auto; line-height:1.7;">A taste of what's waiting for you. Trending movies and top-rated series — all available with your Lone Star TV subscription.</div>
+  </div>
+
+  <!-- TRENDING MOVIES ROW -->
+  <div style="padding:0 32px; margin-bottom:12px;">
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:3px; color:var(--muted); margin-bottom:16px;">🎬 &nbsp;Trending Movies</div>
+    <div id="movies-row" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:12px; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+      <!-- JS populated -->
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+    </div>
+  </div>
+
+  <!-- POPULAR SERIES ROW -->
+  <div style="padding:0 32px; margin-top:32px;">
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:3px; color:var(--muted); margin-bottom:16px;">🎭 &nbsp;Popular Series</div>
+    <div id="series-row" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:12px; scrollbar-width:thin; scrollbar-color:#333 transparent;">
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+      <div class="tmdb-skeleton"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:36px; font-size:11px; color:var(--faint); letter-spacing:1px;">Content data provided by <a href="https://www.themoviedb.org" target="_blank" style="color:#555; text-decoration:none;">TMDB</a>. Titles shown for illustration purposes.</div>
+</section>
+
+<style>
+  .tmdb-card {
+    flex: 0 0 140px;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .tmdb-card:hover { transform: translateY(-6px) scale(1.03); border-color: var(--red); }
+  .tmdb-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
+  .tmdb-card-info { padding: 8px 10px 10px; }
+  .tmdb-card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; color: #ddd; line-height: 1.3; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tmdb-card-rating { font-size: 11px; color: var(--red); font-weight: 700; }
+  .tmdb-skeleton { flex: 0 0 140px; height: 240px; background: linear-gradient(90deg, #1a1a22 25%, #22222e 50%, #1a1a22 75%); background-size: 200% 100%; border-radius: 10px; animation: shimmer 1.4s infinite; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
+
+<script>
+(async function loadTMDB() {
+  const API_KEY = '47a611f0ba08e0ba411e7f467ae91515';
+  const IMG_BASE = 'https://image.tmdb.org/t/p/w300';
+
+  async function fetchTMDB(url) {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.results || [];
+    } catch(e) { return []; }
+  }
+
+  function renderCards(items, containerId) {
+    const container = document.getElementById(containerId);
+    if (!items.length) { container.innerHTML = '<div style="color:#555; font-size:13px; padding:20px;">Content unavailable at this time.</div>'; return; }
+    container.innerHTML = items.slice(0, 12).map(item => {
+      const title = item.title || item.name || 'Unknown';
+      const poster = item.poster_path ? IMG_BASE + item.poster_path : null;
+      const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
+      if (!poster) return '';
+      return `
+        <div class="tmdb-card">
+          <img src="${poster}" alt="${title}" loading="lazy"/>
+          <div class="tmdb-card-info">
+            <div class="tmdb-card-title" title="${title}">${title}</div>
+            <div class="tmdb-card-rating">★ ${rating}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  const [movies, series] = await Promise.all([
+    fetchTMDB(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`),
+    fetchTMDB(`https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`)
+  ]);
+
+  renderCards(movies, 'movies-row');
+  renderCards(series, 'series-row');
+})();
+</script>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <div class="section-eyebrow">Ready to Cut the Cord?</div>
+  <div class="section-title">Get Started Today</div>
+  <div class="section-divider"></div>
+  <div class="cta-sub">
+    Plans starting at just $20/month. One device or four — we've got a plan built for you.
+  </div>
+  <div class="cta-buttons">
+    <a href="lonestar-packages.html" class="btn-primary">View All Packages</a>
+    <a href="lonestar-contact.html" class="btn-secondary">Contact Us</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="footer-logo-text">LONE <span>STAR</span> TV</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Lone Star TV · All Rights Reserved · Texas Based</div>
+</footer>
+
+<!-- ANIMATED NETWORK BACKGROUND -->
+<script>
+  // Nav toggle
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  // Hero canvas network
+  const canvas = document.getElementById('heroCanvas');
+  const ctx    = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); init(); });
+
+  const NODES = [];
+  const COUNT = 55;
+
+  function init() {
+    NODES.length = 0;
+    for (let i = 0; i < COUNT; i++) {
+      NODES.push({
+        x:  Math.random() * canvas.width,
+        y:  Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r:  Math.random() * 1.8 + 0.6
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const bg = ctx.createRadialGradient(
+      canvas.width/2, canvas.height/2, 0,
+      canvas.width/2, canvas.height/2, canvas.width * 0.9
+    );
+    bg.addColorStop(0,   '#1e2028');
+    bg.addColorStop(0.5, '#161820');
+    bg.addColorStop(1,   '#0e0f13');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const MAX = 140;
+    for (let i = 0; i < NODES.length; i++) {
+      for (let j = i + 1; j < NODES.length; j++) {
+        const dx = NODES[i].x - NODES[j].x;
+        const dy = NODES[i].y - NODES[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < MAX) {
+          ctx.beginPath();
+          ctx.moveTo(NODES[i].x, NODES[i].y);
+          ctx.lineTo(NODES[j].x, NODES[j].y);
+          ctx.strokeStyle = `rgba(192,57,43,${(1 - d/MAX) * 0.28})`;
+          ctx.lineWidth = 0.7;
+          ctx.stroke();
+        }
+      }
+    }
+
+    NODES.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(192,57,43,0.06)';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(215,58,46,0.65)';
+      ctx.fill();
+    });
+  }
+
+  function animate() {
+    NODES.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+    });
+    draw();
+    requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+</script>
+</body>
+</html>

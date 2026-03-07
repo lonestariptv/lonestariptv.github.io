@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lone Star TV — Installation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:        #c0392b;
+    --red-bright: #e74c3c;
+    --dark:       #0e0f13;
+    --dark-2:     #13141a;
+    --dark-3:     #1a1c22;
+    --border:     #1e1e26;
+    --text:       #f0f0f0;
+    --muted:      #888;
+    --faint:      #444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ══ NAV ══ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(10,11,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #ffffff08;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px #c0392b66);
+  }
+
+  .nav-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #fff;
+  }
+
+  .nav-logo-text span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+  }
+
+  .nav-cta:hover { background: var(--red-bright) !important; }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  /* ══ VPN BANNER ══ */
+  .vpn-banner {
+    background: #1a0a08;
+    border-bottom: 2px solid var(--red);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 64px;
+  }
+
+  .vpn-banner-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ddd;
+    line-height: 1.6;
+  }
+
+  .vpn-banner-text strong { color: #fff; }
+  .vpn-tag {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .vpn-link { color: var(--red-bright); text-decoration: none; font-weight: 700; }
+  .vpn-link:hover { color: #fff; }
+
+  /* ══ PAGE HERO ══ */
+  .page-hero {
+    padding: 60px 32px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, #c0392b0e 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 7vw, 68px);
+    letter-spacing: 5px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .section-divider {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    margin: 12px auto 16px;
+    border-radius: 2px;
+  }
+
+  .page-sub {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ══ JUMP NAV ══ */
+  .jump-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 24px 50px;
+  }
+
+  .jump-btn {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .jump-btn:hover { border-color: var(--red); color: #fff; }
+
+  /* ══ MAIN CONTENT ══ */
+  .guide-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  /* ══ SECTION BLOCK ══ */
+  .guide-section {
+    scroll-margin-top: 90px;
+  }
+
+  .guide-section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .section-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .section-heading span {
+    font-size: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--red);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ══ ALERT / INFO BOX ══ */
+  .alert-box {
+    background: #1a0a08;
+    border: 1px solid #c0392b55;
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.7;
+  }
+
+  .alert-box strong { color: #fff; }
+  .alert-box a { color: var(--red-bright); text-decoration: none; font-weight: 600; }
+
+  .info-box {
+    background: #0d1018;
+    border: 1px solid #1e3a55;
+    border-left: 3px solid #3498db;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #bbb;
+    line-height: 1.7;
+  }
+
+  .info-box strong { color: #fff; }
+
+  /* ══ STEP LIST ══ */
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+
+  .step-item:hover { border-color: #c0392b33; }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--red);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-body { flex: 1; }
+
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .step-desc strong { color: #ddd; }
+
+  .step-desc .code-tag {
+    display: inline-block;
+    background: #0d0e12;
+    border: 1px solid #333;
+    color: var(--red-bright);
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ══ APP TABS ══ */
+  .app-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .app-tab {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .app-tab:hover { color: #fff; border-color: #c0392b44; }
+  .app-tab.active { background: #1a0a08; border-color: var(--red); color: #fff; border-bottom-color: var(--red); }
+
+  .app-content { display: none; }
+  .app-content.active { display: block; }
+
+  /* ══ CREDENTIAL BOX ══ */
+  .cred-box {
+    background: #0d0e12;
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-top: 16px;
+  }
+
+  .cred-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a22;
+    font-size: 14px;
+  }
+
+  .cred-row:last-child { border-bottom: none; }
+
+  .cred-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .cred-value {
+    color: var(--red-bright);
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 700;
+    background: #1a1a22;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+
+  /* ══ SUPPORT BOX ══ */
+  .support-box {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 32px;
+    text-align: center;
+  }
+
+  .support-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .support-box p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .support-email {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 13px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .support-email:hover { background: var(--red-bright); }
+
+  /* ══ FOOTER ══ */
+  footer {
+    background: #0a0b0e;
+    border-top: 1px solid var(--border);
+    padding: 40px 32px 30px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px #c0392b55);
+  }
+
+  .footer-logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 5px;
+    color: #fff;
+  }
+
+  .footer-logo-text span { color: var(--red); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+  .footer-copy { font-size: 12px; color: #2a2a2a; letter-spacing: 1px; }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(10,11,14,0.98);
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      gap: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .guide-wrap { padding: 0 16px 60px; }
+    .step-item { padding: 14px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="nav-logo-text">LONE <span>STAR</span> TV</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html" class="active">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+    <li><a href="lonestar-packages.html" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- VPN BANNER -->
+<div class="vpn-banner">
+  <div class="vpn-banner-text">
+    <span class="vpn-tag">Required</span>
+    <strong>A VPN with a Static IP is required to use Lone Star TV.</strong>
+    &nbsp;Enable your VPN's static IP feature before setup. We recommend <a class="vpn-link" href="https://protonvpn.com" target="_blank">Proton VPN</a> (free) or <a class="vpn-link" href="https://surfshark.com" target="_blank">Surfshark VPN</a> — our personal pick, unlimited devices + static IP support.
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="eyebrow">Step-by-Step</div>
+  <div class="page-title">Installation Guide</div>
+  <div class="section-divider"></div>
+  <div class="page-sub">Follow the steps below to get Lone Star TV up and running on your device. Need help? We've got you covered.</div>
+</div>
+
+<!-- JUMP NAV -->
+<div class="jump-nav">
+  <a class="jump-btn" href="#step-developer">Step 1: Developer Mode</a>
+  <a class="jump-btn" href="#step-downloader">Step 2: Downloader App</a>
+  <a class="jump-btn" href="#step-apps">Step 3: Install Your App</a>
+  <a class="jump-btn" href="#step-setup">Step 4: App Setup</a>
+  <a class="jump-btn" href="#step-support">Need Help?</a>
+</div>
+
+<!-- GUIDE CONTENT -->
+<div class="guide-wrap">
+
+  <!-- ══ BEFORE YOU START ══ -->
+  <div class="alert-box">
+    <strong>⚠️ Before You Start:</strong> Make sure your VPN is installed, active, and set to a <strong>static IP address</strong> on your device before proceeding. A static IP is required for your account to function correctly — do not skip this step.<br><br>
+    We recommend <a href="https://protonvpn.com" target="_blank">Proton VPN</a> (free) or <a href="https://surfshark.com" target="_blank">Surfshark VPN</a> (our personal pick — unlimited devices + built-in static IP support). Once your VPN is active with a static IP, come back and continue below.
+  </div>
+
+  <!-- ══ STEP 1 — DEVELOPER MODE ══ -->
+  <div class="guide-section" id="step-developer">
+    <div class="guide-section-header">
+      <div class="section-icon">🔓</div>
+      <div class="section-heading">
+        <span>Step 1 · Firestick Only</span>
+        Enable Developer Mode
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>ℹ️ Why is this needed?</strong> Amazon restricts installing apps from outside their App Store by default. Developer Mode unlocks this so you can install Lone Star TV apps.
+      <br><br><strong>Not on a Firestick?</strong> Android devices and Windows PCs can skip directly to Step 3.
+    </div>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Go to Settings</div>
+          <div class="step-desc">Press the <strong>Home</strong> button on your Fire TV remote, then select <strong>Settings</strong>.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Open My Fire TV or System</div>
+          <div class="step-desc">Select <strong>My Fire TV</strong> or <strong>System</strong> depending on your device model.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Select About</div>
+          <div class="step-desc">Select the <strong>About</strong> option from the menu.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Click Your Device Name 7 Times</div>
+          <div class="step-desc">On the About page, select the <strong>first item</strong> (your Fire TV device's name) <strong>seven times</strong>. You'll see a countdown at the bottom of the screen. Keep clicking until you see: <br><br><em style="color:#aaa;">"No Need, You Are Already a Developer"</em><br><br>Your Developer Options menu is now unlocked.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Go Back &amp; Open Developer Options</div>
+          <div class="step-desc">Press the <strong>Back</strong> button on your remote to return to the previous menu, then select <strong>Developer Options</strong>.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Enable Install Unknown Apps</div>
+          <div class="step-desc">Select <strong>Install Unknown Apps</strong>. For <strong>each app listed</strong>, toggle the setting to <strong>On</strong>. This allows apps to be installed from outside the Amazon App Store.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2 — DOWNLOADER ══ -->
+  <div class="guide-section" id="step-downloader">
+    <div class="guide-section-header">
+      <div class="section-icon">📥</div>
+      <div class="section-heading">
+        <span>Step 2 · Firestick Only</span>
+        Install the Downloader App
+      </div>
+    </div>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Find &amp; Install Downloader</div>
+          <div class="step-desc">Search for <strong>Downloader</strong> in the Amazon App Store and install it. It's a free app used to sideload our streaming apps onto your Firestick.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Open Downloader &amp; Enter the Code</div>
+          <div class="step-desc">Open the Downloader app and enter this code: <span class="code-tag">250931</span><br><br>This will redirect you to our app library. Scroll down to find <strong>TiviMate</strong>, <strong>IPTV Smarters Pro</strong>, and <strong>NexTV</strong>. Choose your preferred app.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-box" style="margin-top:16px;">
+      <strong>⚠️ Code not working?</strong> If the code <span style="color:#e74c3c; font-family:monospace; font-weight:700;">250931</span> doesn't work on your Firestick, enter this URL instead:<br><br>
+      <a href="https://firesticktricks.com/smarter" target="_blank" style="color:#e74c3c; font-weight:700;">firesticktricks.com/smarter</a>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3 — CHOOSE APP ══ -->
+  <div class="guide-section" id="step-apps">
+    <div class="guide-section-header">
+      <div class="section-icon">📱</div>
+      <div class="section-heading">
+        <span>Step 3 · All Devices</span>
+        Choose &amp; Install Your App
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>ℹ️ Which app should I use?</strong> All three apps work great with Lone Star TV. For first-time users we recommend <strong>IPTV Smarters Pro</strong> — it's the most straightforward to set up.
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px;">
+
+      <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:10px; padding:20px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">IPTV Smarters Pro</div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin-bottom:10px;">★ Recommended for Beginners</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6;">
+          <strong style="color:#aaa;">Firestick:</strong> Use Downloader code above<br>
+          <strong style="color:#aaa;">Android:</strong> <a href="https://www.iptvsmarters.com/" target="_blank" style="color:var(--red-bright);">iptvsmarters.com</a><br>
+          <strong style="color:#aaa;">iOS:</strong> Search <em>"Smarters Player Lite"</em> in App Store
+        </div>
+      </div>
+
+      <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:10px; padding:20px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">TiviMate</div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--faint); text-transform:uppercase; margin-bottom:10px;">Great for Firestick</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6;">
+          <strong style="color:#aaa;">Firestick:</strong> Use Downloader code above<br>
+          <strong style="color:#aaa;">Android:</strong> Search <em>"TiviMate"</em> in Google Play
+        </div>
+      </div>
+
+      <div style="background:var(--dark-2); border:1px solid var(--border); border-radius:10px; padding:20px;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:6px;">NexTV</div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:2px; color:var(--faint); text-transform:uppercase; margin-bottom:10px;">Great for Mobile</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6;">
+          <strong style="color:#aaa;">Firestick:</strong> Use Downloader code above<br>
+          <strong style="color:#aaa;">iOS:</strong> Search <em>"NexTV"</em> in App Store<br>
+          <strong style="color:#aaa;">Android:</strong> Search <em>"NexTV"</em> in Google Play
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ STEP 4 — APP SETUP ══ -->
+  <div class="guide-section" id="step-setup">
+    <div class="guide-section-header">
+      <div class="section-icon">⚙️</div>
+      <div class="section-heading">
+        <span>Step 4 · All Devices</span>
+        Set Up Your App
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>ℹ️ Your credentials:</strong> When you sign up, we'll email you your <strong>Username</strong>, <strong>Password</strong>, <strong>URL</strong>, and <strong>M3U Link</strong>. You'll need these for the steps below. Keep that email handy.
+    </div>
+
+    <!-- APP TABS -->
+    <div class="app-tabs">
+      <div class="app-tab active" onclick="switchTab('smarters')">IPTV Smarters Pro</div>
+      <div class="app-tab" onclick="switchTab('nextv')">NexTV</div>
+      <div class="app-tab" onclick="switchTab('tivimate')">TiviMate</div>
+    </div>
+
+    <!-- SMARTERS -->
+    <div class="app-content active" id="tab-smarters">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Open IPTV Smarters Pro</div>
+            <div class="step-desc">Launch the app on your device.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Select Login Method</div>
+            <div class="step-desc">
+              <strong>On a TV or Firestick:</strong> Select <strong>"Login with XStream Codes API"</strong><br><br>
+              <strong>On a phone, tablet, or laptop:</strong> Select <strong>"Add Your Playlist"</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Enter Your Credentials</div>
+            <div class="step-desc">Fill in the fields using the details from your welcome email:</div>
+            <div class="cred-box">
+              <div class="cred-row">
+                <span class="cred-label">Name</span>
+                <span class="cred-value">Any name you prefer</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Username</span>
+                <span class="cred-value">From your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Password</span>
+                <span class="cred-value">From your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">URL</span>
+                <span class="cred-value">From your email</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Press Add User &amp; Start Streaming</div>
+            <div class="step-desc">Hit <strong>Add User</strong> and your channels will load. You're all set!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXTV -->
+    <div class="app-content" id="tab-nextv">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Open NexTV</div>
+            <div class="step-desc">Launch the app. If you see a <strong>"Software Update"</strong> prompt, press <strong>Later</strong>.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Add Your Playlist</div>
+            <div class="step-desc">Press <strong>Add Your Playlist</strong>, then select <strong>Xstream</strong>.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Enter Your Credentials</div>
+            <div class="step-desc">Fill in the fields using your welcome email:</div>
+            <div class="cred-box">
+              <div class="cred-row">
+                <span class="cred-label">Hostname</span>
+                <span class="cred-value">URL from your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Username</span>
+                <span class="cred-value">From your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Password</span>
+                <span class="cred-value">From your email</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">On Mobile — Use M3U Instead</div>
+            <div class="step-desc">
+              If setting up NexTV on a <strong>phone or tablet</strong>, select <strong>Add Your Playlist → M3U Playlist</strong> instead.<br><br>
+              Enter any <strong>Playlist Name</strong> and paste your <strong>M3U Link</strong> from your email into the <strong>Server URL</strong> field. Press <strong>Next</strong> and start streaming.
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Continue &amp; Start Streaming</div>
+            <div class="step-desc">Hit <strong>Continue</strong> and your content will load. You're good to go!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIVIMATE -->
+    <div class="app-content" id="tab-tivimate">
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Open TiviMate</div>
+            <div class="step-desc">Launch the app on your Firestick or Android device.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Add Your Playlist</div>
+            <div class="step-desc">Select <strong>Add Your Playlist</strong>, then select <strong>Xtream Codes</strong>.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Enter Your Credentials</div>
+            <div class="step-desc">Fill in the fields using your welcome email:</div>
+            <div class="cred-box">
+              <div class="cred-row">
+                <span class="cred-label">Server Address (URL)</span>
+                <span class="cred-value">From your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Username</span>
+                <span class="cred-value">From your email</span>
+              </div>
+              <div class="cred-row">
+                <span class="cred-label">Password</span>
+                <span class="cred-value">From your email</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Or Use Your M3U Link</div>
+            <div class="step-desc">TiviMate also accepts your <strong>M3U Link</strong> from your welcome email as an alternative to Xtream Codes. Either method works.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Start Streaming</div>
+            <div class="step-desc">Confirm your details and your channels will load. Enjoy!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SUPPORT ══ -->
+  <div class="guide-section" id="step-support">
+    <div class="support-box">
+      <h3>Still Need Help?</h3>
+      <p>No robots, no ticket systems. Reach out directly and a real person will get back to you as soon as possible.</p>
+      <a class="support-email" href="/cdn-cgi/l/email-protection#c68aa9a8a3b5b2a7b4b2b0b2be86a1aba7afaae8a5a9ab">📧 &nbsp; Email Us</a>
+      <div style="margin-top:14px; font-size:13px; color:var(--faint);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="de92b1b0bbadaabfacaaa8aaa69eb9b3bfb7b2f0bdb1b3">[email&#160;protected]</a></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="footer-logo-text">LONE <span>STAR</span> TV</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Lone Star TV · All Rights Reserved · Texas Based</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  function switchTab(tab) {
+    document.querySelectorAll('.app-ta
