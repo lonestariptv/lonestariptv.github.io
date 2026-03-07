@@ -236,7 +236,7 @@
           </div>
           <div class="quick-link-arrow">›</div>
         </a>
-        <a href="lonestar-packages.html" class="quick-link-btn">
+        <a href="lonestar-install.html" class="quick-link-btn">
           <div class="quick-link-left">
             <div class="quick-link-icon">📖</div>
             <div>
@@ -481,4 +481,18 @@
         headers: { 'Accept': 'application/json' }
       });
 
-      if (respons
+      if (response.ok) {
+        document.getElementById('contactFormState').style.display = 'none';
+        document.getElementById('contactSuccess').style.display = 'block';
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+      alert('Something went wrong. Please try again or email us directly.');
+    }
+  });
+</script>
+</body>
+</html>

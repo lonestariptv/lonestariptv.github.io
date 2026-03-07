@@ -483,4 +483,16 @@
 
       if (response.ok) {
         document.getElementById('formState').style.display = 'none';
-        document.getElementB
+        document.getElementById('successState').style.display = 'block';
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Submit Service Request';
+      alert('Something went wrong. Please try again or email us directly.');
+    }
+  });
+</script>
+</body>
+</html>
