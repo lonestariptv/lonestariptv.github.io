@@ -981,4 +981,11 @@
   });
 
   function switchTab(tab) {
-    document.querySelectorAll('.app-ta
+    document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.app-content').forEach(c => c.classList.remove('active'));
+    document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+</script>
+</body>
+</html>
