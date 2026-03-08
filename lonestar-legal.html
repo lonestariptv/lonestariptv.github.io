@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lone Star TV — Legal & Policies</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #c0392b; --red-bright: #e74c3c;
+    --dark: #0e0f13; --dark-2: #13141a; --dark-3: #1a1c22;
+    --border: #1e1e26; --text: #f0f0f0; --muted: #888; --faint: #444;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(10,11,14,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #ffffff08; }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 6px #c0392b66); }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 4px; color: #fff; }
+  .nav-logo-text span { color: var(--red); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: var(--red); }
+  .nav-cta { background: var(--red); color: #fff !important; padding: 8px 20px; border-radius: 4px; }
+  .nav-cta:hover { background: var(--red-bright) !important; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+
+  /* PAGE HERO */
+  .page-hero { padding: 80px 32px 50px; text-align: center; position: relative; overflow: hidden; margin-top: 64px; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center top, #c0392b0e 0%, transparent 65%); pointer-events: none; }
+  .eyebrow { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 6px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 7vw, 68px); letter-spacing: 5px; color: #fff; margin-bottom: 8px; }
+  .section-divider { width: 50px; height: 3px; background: linear-gradient(90deg, #c0392b, #e74c3c); margin: 12px auto 16px; border-radius: 2px; }
+  .page-sub { color: var(--muted); font-size: 15px; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+  /* TAB NAV */
+  .tab-nav { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 32px 24px 0; }
+  .tab-btn { background: var(--dark-3); border: 1px solid var(--border); color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 10px 24px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .tab-btn:hover { border-color: var(--red); color: #fff; }
+  .tab-btn.active { background: #1a0808; border-color: var(--red); color: #fff; }
+
+  /* POLICY CONTENT */
+  .policy-wrap { max-width: 820px; margin: 0 auto; padding: 60px 24px 100px; }
+  .policy-section { display: none; }
+  .policy-section.active { display: block; }
+
+  /* POLICY HEADER */
+  .policy-header { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .policy-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 5px; color: var(--faint); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .policy-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--faint); }
+  .policy-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 7vw, 72px); letter-spacing: 3px; color: #fff; line-height: 1; }
+  .policy-updated { font-size: 12px; color: var(--faint); margin-top: 14px; letter-spacing: 1px; }
+
+  /* POLICY ITEMS */
+  .policy-item { padding: 32px 0; border-bottom: 1px solid var(--border); }
+  .policy-item:last-child { border-bottom: none; }
+  .policy-num { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; color: var(--red); text-transform: uppercase; margin-bottom: 14px; }
+  .policy-text { font-size: 15px; color: #bbb; line-height: 1.85; }
+  .policy-text strong { color: #e0e0e0; }
+  .policy-text a { color: var(--red-bright); text-decoration: none; }
+  .policy-text a:hover { color: #fff; }
+
+  /* NOTICE BOX */
+  .policy-notice { background: #1a0a08; border: 1px solid #c0392b44; border-left: 3px solid var(--red); border-radius: 8px; padding: 18px 20px; margin-bottom: 40px; font-size: 14px; color: #ccc; line-height: 1.7; }
+  .policy-notice strong { color: #fff; }
+
+  /* FOOTER */
+  footer { background: #0a0b0e; border-top: 1px solid var(--border); padding: 40px 32px 30px; text-align: center; }
+  .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; }
+  .footer-logo img { width: 32px; height: 32px; object-fit: contain; filter: drop-shadow(0 0 5px #c0392b55); }
+  .footer-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 5px; color: #fff; }
+  .footer-logo-text span { color: var(--red); }
+  .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; list-style: none; }
+  .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--red); }
+  .footer-copy { font-size: 12px; color: #2a2a2a; letter-spacing: 1px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,11,14,0.98); flex-direction: column; align-items: center; padding: 30px 20px; gap: 24px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .policy-wrap { padding: 40px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="nav-logo-text">LONE <span>STAR</span> TV</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+    <li><a href="lonestar-packages.html" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="eyebrow">Legal // Policies</div>
+  <div class="page-title">Legal & Policies</div>
+  <div class="section-divider"></div>
+  <div class="page-sub">Please read these policies carefully. By using Lone Star TV, you agree to the terms outlined below.</div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchPolicy('tos')">Terms of Service</button>
+  <button class="tab-btn" onclick="switchPolicy('refund')">Refund Policy</button>
+  <button class="tab-btn" onclick="switchPolicy('privacy')">Privacy Policy</button>
+</div>
+
+<!-- POLICY CONTENT -->
+<div class="policy-wrap">
+
+  <!-- TERMS OF SERVICE -->
+  <div class="policy-section active" id="policy-tos">
+    <div class="policy-header">
+      <div class="policy-label">Legal // Policies</div>
+      <div class="policy-title">Terms of Service.</div>
+      <div class="policy-updated">Last updated: 2025</div>
+    </div>
+
+    <div class="policy-notice">
+      <strong>Important:</strong> By purchasing or using any Lone Star TV service, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use our service.
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">1. &nbsp; Acceptance of Terms</div>
+      <p class="policy-text">By purchasing or using any Lone Star TV service, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use our service.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">2. &nbsp; Personal Use Only</div>
+      <p class="policy-text">Lone Star TV subscriptions are for <strong>personal, non-commercial use only</strong>. Sharing, reselling, or redistributing your credentials without an authorized reseller agreement is strictly prohibited and will result in immediate account termination.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">3. &nbsp; Account Responsibility</div>
+      <p class="policy-text">You are solely responsible for maintaining the confidentiality of your login credentials. Do not share your username or password with others. Any activity that occurs under your account is your responsibility. Lone Star TV is not liable for any unauthorized use of your account resulting from your failure to keep credentials secure.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">4. &nbsp; VPN Requirement</div>
+      <p class="policy-text">A <strong>VPN with a Static IP address is required</strong> to use Lone Star TV. It is your responsibility to have a compatible VPN configured prior to setup. Failure to use a VPN with a static IP may result in service not functioning correctly. This is not grounds for a refund.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">5. &nbsp; Service Availability</div>
+      <p class="policy-text">We strive to maintain consistent uptime but do not guarantee uninterrupted access. Scheduled maintenance or circumstances beyond our control may result in temporary service interruptions. We will make reasonable efforts to minimize downtime.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">6. &nbsp; Termination</div>
+      <p class="policy-text">We reserve the right to suspend or terminate any account that violates these terms without notice or refund. Violations include but are not limited to: credential sharing, initiating chargebacks, abusive behavior toward support staff, or any attempt to circumvent the VPN or authentication requirements.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">7. &nbsp; Modifications</div>
+      <p class="policy-text">Lone Star TV reserves the right to modify these terms at any time. Continued use of the service after changes are posted constitutes your acceptance of the updated terms. We encourage you to review this page periodically.</p>
+    </div>
+  </div>
+
+  <!-- REFUND POLICY -->
+  <div class="policy-section" id="policy-refund">
+    <div class="policy-header">
+      <div class="policy-label">Legal // Policies</div>
+      <div class="policy-title">Refund Policy.</div>
+      <div class="policy-updated">Last updated: 2025</div>
+    </div>
+
+    <div class="policy-notice">
+      <strong>No Refunds:</strong> All sales are final. Due to the nature of digital subscription services, we do not offer refunds once an account has been delivered and activated. Please read this policy in full before purchasing.
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">1. &nbsp; All Sales Are Final</div>
+      <p class="policy-text">All purchases made through Lone Star TV are <strong>final and non-refundable</strong>. Once your account credentials have been delivered and your subscription has been activated, no refunds will be issued — regardless of usage or remaining subscription time.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">2. &nbsp; Try Before You Buy</div>
+      <p class="policy-text">We strongly encourage all new customers to <strong>contact us before purchasing</strong> if they have any questions about device compatibility, channel availability, or service quality. We are happy to answer questions and help ensure Lone Star TV is the right fit for you before you commit.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">3. &nbsp; Service Interruptions</div>
+      <p class="policy-text">In the rare event of a prolonged service outage directly caused by Lone Star TV infrastructure failure, we may at our sole discretion offer an account extension. This is not a guaranteed remedy and will be evaluated on a case-by-case basis. Brief or temporary interruptions do not qualify.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">4. &nbsp; Chargebacks</div>
+      <p class="policy-text">Initiating a chargeback or payment dispute without contacting us first will result in the <strong>immediate and permanent termination</strong> of your account. We reserve the right to dispute any fraudulent chargebacks. If you have a billing concern, please reach out to us directly — we are committed to resolving issues quickly and fairly.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">5. &nbsp; Contact Us First</div>
+      <p class="policy-text">If you have any billing concerns or issues with your service, please <a href="lonestar-contact.html">contact us directly</a> before initiating any disputes. We are a one-person operation and we genuinely care about your experience. You will always receive a real, personal response — not a bot.</p>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="policy-section" id="policy-privacy">
+    <div class="policy-header">
+      <div class="policy-label">Legal // Policies</div>
+      <div class="policy-title">Privacy Policy.</div>
+      <div class="policy-updated">Last updated: 2025</div>
+    </div>
+
+    <div class="policy-notice">
+      <strong>Your privacy matters.</strong> We collect only the minimum information necessary to provide and maintain your service. We do not sell, rent, or share your personal information with third parties.
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">1. &nbsp; Information We Collect</div>
+      <p class="policy-text">We collect minimal information necessary to provide our service, including your <strong>name and email address</strong> for account delivery and communication, <strong>payment transaction data</strong> processed through Cash App, and your <strong>device IP address</strong> for authentication and fraud prevention.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">2. &nbsp; How We Use Your Information</div>
+      <p class="policy-text">Your information is used solely to <strong>deliver and maintain your subscription</strong>, communicate service updates and account information, and prevent unauthorized access. We do not sell, rent, or trade your personal information to any third parties.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">3. &nbsp; Data Security</div>
+      <p class="policy-text">We implement reasonable security measures to protect your information. However, no method of transmission over the internet is 100% secure. We encourage you to use a strong, unique password and keep your credentials private.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">4. &nbsp; Third-Party Services</div>
+      <p class="policy-text">Our service integrates with <strong>Cash App</strong> for payment processing and recommends <strong>Proton VPN</strong> and <strong>Surfshark VPN</strong> for VPN services. These third parties operate under their own privacy policies, which we encourage you to review independently.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">5. &nbsp; Cookies</div>
+      <p class="policy-text">Our website does not use tracking cookies. We do not monitor your browsing behavior or serve targeted advertisements. Your visit to our site is your own business.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">6. &nbsp; Data Retention</div>
+      <p class="policy-text">We retain your account information for the duration of your active subscription. Upon account termination or cancellation, your personal data will be removed from our systems within <strong>30 days</strong>.</p>
+    </div>
+
+    <div class="policy-item">
+      <div class="policy-num">7. &nbsp; Contact</div>
+      <p class="policy-text">For any privacy-related questions or concerns, please <a href="lonestar-contact.html">contact us directly</a>. We are committed to addressing all concerns promptly and personally.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="star.png" alt="Lone Star TV"/>
+    <span class="footer-logo-text">LONE <span>STAR</span> TV</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="lonestar-packages.html">Packages</a></li>
+    <li><a href="lonestar-install.html">Install Guide</a></li>
+    <li><a href="lonestar-contact.html">Contact</a></li>
+    <li><a href="lonestar-legal.html">Legal</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Lone Star TV · All Rights Reserved · Texas Based</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  function switchPolicy(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.policy-section').forEach(s => s.classList.remove('active'));
+    document.querySelector(`[onclick="switchPolicy('${tab}')"]`).classList.add('active');
+    document.getElementById('policy-' + tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
