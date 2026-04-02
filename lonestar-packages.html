@@ -156,16 +156,53 @@
   .footer-links a:hover { color: var(--red); }
   .footer-copy { font-size: 12px; color: #2a2a2a; letter-spacing: 1px; }
 
+  /* MULTI MOBILE CARDS — shown only on small screens */
+  .multi-mobile { display: none; flex-direction: column; gap: 16px; }
+  .multi-mobile-card { background: var(--dark-2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 20px; }
+  .multi-mobile-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  .multi-mobile-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; color: #fff; }
+  .multi-mobile-devices { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--red); text-transform: uppercase; margin-top: 2px; }
+  .multi-mobile-prices { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .multi-mobile-price { background: var(--dark-3); border: 1px solid var(--border); border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .multi-mobile-price.best { border-color: var(--red); background: #130a0a; }
+  .multi-mobile-price-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--faint); text-transform: uppercase; margin-bottom: 5px; }
+  .multi-mobile-price.best .multi-mobile-price-label { color: var(--red); }
+  .multi-mobile-price-amount { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; color: #e0e0e0; line-height: 1; }
+  .multi-mobile-price.best .multi-mobile-price-amount { color: var(--red-bright); }
+  .multi-mobile-price-period { font-size: 10px; color: var(--faint); margin-top: 2px; }
+  .multi-mobile-savings { font-size: 10px; color: var(--red-bright); font-weight: 700; margin-top: 4px; }
+
   /* RESPONSIVE */
   @media (max-width: 700px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,11,14,0.98); flex-direction: column; align-items: center; padding: 30px 20px; gap: 24px; border-bottom: 1px solid var(--border); }
     .nav-links.open { display: flex; }
     .nav-toggle { display: flex; }
-    .multi-table th, .multi-table td { padding: 12px 10px; }
-    .price-td { font-size: 18px; }
-    .plan-cell .plan-name { font-size: 17px; }
+    /* Hide desktop table, show mobile cards */
+    .multi-wrap { display: none; }
+    .multi-mobile { display: flex; }
+    /* Solo cards full width */
+    .solo-grid { grid-template-columns: 1fr; }
+    .solo-card { padding: 26px 20px 22px; }
+    .solo-price { font-size: 44px; }
+    /* Modal */
     .modal { padding: 28px 20px; }
+    /* Packages wrap padding */
+    .packages-wrap { padding: 0 16px 80px; }
+    /* How section */
+    .how-section { padding: 50px 16px; }
+    .how-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    /* Page hero */
+    .page-hero { padding: 36px 16px 32px; }
+    /* VPN banner */
+    .vpn-banner { padding: 12px 16px; }
+    /* Payment notice wrap on mobile */
+    .payment-notice { font-size: 13px; padding: 12px 16px; text-align: center; }
+  }
+
+  @media (max-width: 400px) {
+    .multi-mobile-prices { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -192,7 +229,7 @@
   <div class="vpn-banner-text">
     <span class="vpn-tag">Required</span>
     <strong>A VPN with a Static IP is required to use Lone Star TV.</strong>
-    &nbsp;Enable your VPN's static IP feature before setup. We recommend <a class="vpn-link" href="https://protonvpn.com" target="_blank">Proton VPN</a> (free) or <a class="vpn-link" href="https://surfshark.com" target="_blank">Surfshark VPN</a> — our personal pick, unlimited devices + static IP support.
+    &nbsp;Enable your VPN's static IP feature before setup. We recommend <a class="vpn-link" href="https://protonvpn.com" target="_blank">Proton VPN</a> — our pick for privacy, reliability, and unlimited devices with static IP support.nbsp;Enable your VPN's static IP feature before setup. We recommend <a class="vpn-link" href="https://protonvpn.com" target="_blank">Proton VPN</a> — our pick for privacy, reliability, and unlimited devices with static IP support.
   </div>
 </div>
 
@@ -300,6 +337,95 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- MOBILE-ONLY MULTI DEVICE CARDS -->
+  <div class="multi-mobile">
+
+    <div class="multi-mobile-card">
+      <div class="multi-mobile-header">
+        <div>
+          <div class="multi-mobile-name">The Pair</div>
+          <div class="multi-mobile-devices">2 Devices</div>
+        </div>
+      </div>
+      <div class="multi-mobile-prices">
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">Monthly</div>
+          <div class="multi-mobile-price-amount">$35</div>
+          <div class="multi-mobile-price-period">/mo</div>
+        </div>
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">6 Months</div>
+          <div class="multi-mobile-price-amount">$110</div>
+          <div class="multi-mobile-price-period">total</div>
+        </div>
+        <div class="multi-mobile-price best">
+          <div class="multi-mobile-price-label">Yearly ★</div>
+          <div class="multi-mobile-price-amount">$145</div>
+          <div class="multi-mobile-price-period">total</div>
+          <div class="multi-mobile-savings">Save $275</div>
+        </div>
+      </div>
+      <button class="solo-btn" onclick="openModalMulti('The Pair', '2 Devices')">Request This Plan</button>
+    </div>
+
+    <div class="multi-mobile-card">
+      <div class="multi-mobile-header">
+        <div>
+          <div class="multi-mobile-name">The Herd</div>
+          <div class="multi-mobile-devices">3 Devices</div>
+        </div>
+      </div>
+      <div class="multi-mobile-prices">
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">Monthly</div>
+          <div class="multi-mobile-price-amount">$45</div>
+          <div class="multi-mobile-price-period">/mo</div>
+        </div>
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">6 Months</div>
+          <div class="multi-mobile-price-amount">$130</div>
+          <div class="multi-mobile-price-period">total</div>
+        </div>
+        <div class="multi-mobile-price best">
+          <div class="multi-mobile-price-label">Yearly ★</div>
+          <div class="multi-mobile-price-amount">$155</div>
+          <div class="multi-mobile-price-period">total</div>
+          <div class="multi-mobile-savings">Save $385</div>
+        </div>
+      </div>
+      <button class="solo-btn" onclick="openModalMulti('The Herd', '3 Devices')">Request This Plan</button>
+    </div>
+
+    <div class="multi-mobile-card">
+      <div class="multi-mobile-header">
+        <div>
+          <div class="multi-mobile-name">The Stampede</div>
+          <div class="multi-mobile-devices">4 Devices</div>
+        </div>
+      </div>
+      <div class="multi-mobile-prices">
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">Monthly</div>
+          <div class="multi-mobile-price-amount">$50</div>
+          <div class="multi-mobile-price-period">/mo</div>
+        </div>
+        <div class="multi-mobile-price">
+          <div class="multi-mobile-price-label">6 Months</div>
+          <div class="multi-mobile-price-amount">$150</div>
+          <div class="multi-mobile-price-period">total</div>
+        </div>
+        <div class="multi-mobile-price best">
+          <div class="multi-mobile-price-label">Yearly ★</div>
+          <div class="multi-mobile-price-amount">$175</div>
+          <div class="multi-mobile-price-period">total</div>
+          <div class="multi-mobile-savings">Save $425</div>
+        </div>
+      </div>
+      <button class="solo-btn" onclick="openModalMulti('The Stampede', '4 Devices')">Request This Plan</button>
+    </div>
+
   </div>
 
   <div class="custom-note">
